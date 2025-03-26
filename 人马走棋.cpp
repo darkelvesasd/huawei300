@@ -1,23 +1,24 @@
+
 #include<iostream>
 #include<queue>
 #include<vector>
 using namespace std;
-typedef pair<int,int>PII;
+typedef pair<int, int>PII;
 int flag = 0;
 int m, n;
 int hx[8] = { -2,-2,-1,-1,1,1,2,2 };
 int hy[8] = { -1,1,-2,2,2,-2,1,-1 };
 int sx[4] = { 0,0,-1,1 };
 int sy[4] = { -1,1,0,0 };
-void bfs(vector<vector<char>>&v, vector<vector<bool>>&vb,int x,int y,queue<PII>q)
+void bfs(vector<vector<char>>& v, vector<vector<bool>>& vb, int x, int y, queue<PII>q)
 {
-	q.emplace(PII(x,y));
+	q.emplace(PII(x, y));
 	int cnt = 0;
 	queue<PII>q1;
 	queue<bool>qb;
 	queue<bool>qb1;
 	qb.emplace(false);
-	while (!q.empty()||!q1.empty())
+	while (!q.empty() || !q1.empty())
 	{
 		int sz = q.size();
 		while (!q1.empty())
@@ -29,7 +30,7 @@ void bfs(vector<vector<char>>&v, vector<vector<bool>>&vb,int x,int y,queue<PII>q
 			qb.emplace(qbt1);
 			qb1.pop();
 		}
-		for(int i=0;i<sz;i++)
+		for (int i = 0;i < sz;i++)
 		{
 			PII pt = q.front();
 			vb[pt.first][pt.second] = true;
@@ -59,21 +60,21 @@ void bfs(vector<vector<char>>&v, vector<vector<bool>>&vb,int x,int y,queue<PII>q
 				}
 				else
 				{
-					for (int i = 0; i < 8; i++)
-					{
-						int xt = hx[i] + pt.first;
-						int yt = hy[i] + pt.second;
-						if (xt >= 0 && xt < m && yt >= 0 && yt < n && vb[xt][yt] == false && (v[xt][yt] != 'X'))
+						for (int i = 0; i < 8; i++)
 						{
-							q.emplace(PII(xt, yt));
-							qb.emplace(true);
+							int xt = hx[i] + pt.first;
+							int yt = hy[i] + pt.second;
+							if (xt >= 0 && xt < m && yt >= 0 && yt < n && vb[xt][yt] == false && (v[xt][yt] != 'X'))
+							{
+								q.emplace(PII(xt, yt));
+								qb.emplace(true);
+							}
 						}
-					}
 				}
 			}
-			else if(v[pt.first][pt.second]=='S')
+			else if (v[pt.first][pt.second] == 'S')
 			{
-				if (qbt == 0)
+				if (qbt == false)
 				{
 					for (int i = 0; i < 4; i++)
 					{
@@ -115,19 +116,19 @@ void bfs(vector<vector<char>>&v, vector<vector<bool>>&vb,int x,int y,queue<PII>q
 						if (xt >= 0 && xt < m && yt >= 0 && yt < n && vb[xt][yt] == false && (v[xt][yt] != 'X'))
 						{
 							q.emplace(PII(xt, yt));
-							qb1.emplace(false);
+							qb.emplace(false);
 						}
 					}
 				}
 			}
 		}
-		cnt++;		
+		cnt++;
 	}
 }
 int main()
 {
 	cin >> m >> n;
-	vector<vector<char>>v(m,vector<char>(n));
+	vector<vector<char>>v(m, vector<char>(n));
 	queue<PII>q;
 	for (int i = 0; i < m; i++)
 	{
@@ -135,11 +136,11 @@ int main()
 		{
 			char c;
 			cin >> c;
-			v[i][j]=c;
+			v[i][j] = c;
 		}
 	}
-	vector<vector<bool>>vb(m,vector<bool>(n));
-	bfs(v,vb,0,0,q);
+	vector<vector<bool>>vb(m, vector<bool>(n));
+	bfs(v, vb, 0, 0, q);
 	if (!flag)
 	{
 		cout << 0;
@@ -156,3 +157,11 @@ XXXXXXX.X
 .........
 .........
  */
+/*5 3
+.....
+.....
+.....
+SSSSS
+SSSSS
+SSSSS
+*/
